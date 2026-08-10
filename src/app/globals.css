@@ -1,0 +1,90 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Tells the browser which palette to use for chrome it renders itself —
+     scrollbars, native date pickers, autofill — that our CSS can't reach.
+     Without this it defaults to light chrome even in dark mode. */
+  color-scheme: light;
+  --radius: 0.75rem;
+  --card: rgb(255, 255, 255);
+  --card-foreground: rgb(23, 25, 31);
+  --popover: rgb(255, 255, 255);
+  --popover-foreground: rgb(23, 25, 31);
+  --primary: rgb(37, 99, 235);
+  --primary-foreground: rgb(255, 255, 255);
+  --secondary: rgb(243, 245, 249);
+  --secondary-foreground: rgb(37, 99, 235);
+  --muted: rgb(243, 245, 249);
+  --muted-foreground: rgb(100, 107, 122);
+  --accent: rgb(238, 242, 255);
+  --accent-foreground: rgb(37, 99, 235);
+  --destructive: rgb(220, 38, 38);
+  --border: rgb(228, 231, 237);
+  --input: rgb(228, 231, 237);
+  --ring: rgb(147, 173, 245);
+  --background: rgb(255, 255, 255);
+  --foreground: rgb(23, 25, 31);
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  /* Belt-and-suspenders: individual wide elements (tables, etc.) get their
+     own overflow-x-auto container; the page itself must never scroll. */
+  overflow-x: hidden;
+}
+
+/* Dark mode: a deliberate dark slate/navy surface, not near-black. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --card: rgb(30, 33, 42);
+    --card-foreground: rgb(236, 238, 244);
+    --popover: rgb(30, 33, 42);
+    --popover-foreground: rgb(236, 238, 244);
+    --primary: rgb(96, 148, 255);
+    --primary-foreground: rgb(13, 17, 26);
+    --secondary: rgb(37, 41, 52);
+    --secondary-foreground: rgb(148, 183, 255);
+    --muted: rgb(37, 41, 52);
+    --muted-foreground: rgb(159, 166, 184);
+    --accent: rgb(40, 45, 62);
+    --accent-foreground: rgb(148, 183, 255);
+    --destructive: rgb(248, 113, 113);
+    --border: rgb(48, 53, 68);
+    --input: rgb(48, 53, 68);
+    --ring: rgb(96, 148, 255);
+    --background: rgb(19, 21, 28);
+    --foreground: rgb(236, 238, 244);
+  }
+}
