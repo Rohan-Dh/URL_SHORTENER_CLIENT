@@ -79,7 +79,9 @@ function AnalyticsButton({ item, label = "Analytics" }: { item: ShortUrlData; la
 
 export default function Home() {
   const [url, setUrl] = useState("");
-  const [alias, setAlias] = useState("");
+  // Custom aliases are temporarily disabled — uncomment to re-enable (also
+  // see the commented-out input below and the payload in handleSubmit).
+  // const [alias, setAlias] = useState("");
   const [expiresInDays, setExpiresInDays] = useState(NEVER_EXPIRES);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -101,7 +103,7 @@ export default function Home() {
     try {
       const data = await createShortUrl({
         url,
-        alias: alias || undefined,
+        // alias: alias || undefined,
         expiresInDays: expiresInDays === NEVER_EXPIRES ? undefined : Number(expiresInDays),
       });
       setResult(data);
@@ -110,7 +112,7 @@ export default function Home() {
       setHistory(nextHistory);
       saveHistory(nextHistory);
       setUrl("");
-      setAlias("");
+      // setAlias("");
       setExpiresInDays(NEVER_EXPIRES);
     } catch (err) {
       if (axios.isAxiosError(err) && isApiErrorPayload(err.response?.data)) {
@@ -163,39 +165,41 @@ export default function Home() {
                 onChange={(e) => setUrl(e.target.value)}
               />
             </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="alias" className="text-sm font-medium">
-                  Custom alias <span className="text-muted-foreground font-normal">(optional)</span>
-                </label>
-                <Input
-                  id="alias"
-                  type="text"
-                  placeholder="my-cool-link"
-                  value={alias}
-                  onChange={(e) => setAlias(e.target.value)}
-                  minLength={3}
-                  maxLength={30}
-                  pattern="[a-zA-Z0-9-]+"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="validity" className="text-sm font-medium">
-                  Link validity
-                </label>
-                <Select value={expiresInDays} onValueChange={setExpiresInDays}>
-                  <SelectTrigger id="validity">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {VALIDITY_OPTIONS.map((opt) => (
-                      <SelectItem key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            {/* Custom aliases are temporarily disabled — uncomment to re-enable,
+                and restore the "grid sm:grid-cols-2 gap-4" wrapper below to
+                put it back side-by-side with the validity select.
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="alias" className="text-sm font-medium">
+                Custom alias <span className="text-muted-foreground font-normal">(optional)</span>
+              </label>
+              <Input
+                id="alias"
+                type="text"
+                placeholder="my-cool-link"
+                value={alias}
+                onChange={(e) => setAlias(e.target.value)}
+                minLength={3}
+                maxLength={30}
+                pattern="[a-zA-Z0-9-]+"
+              />
+            </div>
+            */}
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="validity" className="text-sm font-medium">
+                Link validity
+              </label>
+              <Select value={expiresInDays} onValueChange={setExpiresInDays}>
+                <SelectTrigger id="validity">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {VALIDITY_OPTIONS.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <Button type="submit" disabled={loading} size="lg" className="self-start">
               {loading ? <Loader2 className="animate-spin" /> : <Link2 />}
